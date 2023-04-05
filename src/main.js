@@ -39,7 +39,7 @@ axios.post(global.state.apiUrl+"/api/login", configAxios)
   .catch(error => {
     console.error("error");
 });
-//console.log("main.js")
+console.log("main.js")
 //Ajouter l'Authorization à toutes les requêtes sortantes
 axios.interceptors.request.use(
   (config) => {
