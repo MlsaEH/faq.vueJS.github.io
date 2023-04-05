@@ -1,0 +1,27 @@
+[
+    {
+        "id":0,
+        "code":"All",
+        "label":"All",
+        "company": ""
+    },
+    {
+        "id":1,
+        "code":"E-MODULO",
+        "label":"Transport",
+        "company": "55"
+    },
+    {
+        "id":2,
+        "code":"EUROCAI",
+        "label":"Caisse",
+        "company": "55"
+    }
+    ,
+    {
+        "id":3,
+        "code":"ALVARA",
+        "label":"ALVARA",
+        "company": "01"
+    }
+]    

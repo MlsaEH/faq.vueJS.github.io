@@ -1,0 +1,83 @@
+[
+    {
+        "id":6,
+        "numFaq":6,
+        "productId":2,
+        "question":"Création des commandes",
+        "answer":[  {   "id":1,
+                        "label": "Menu /Mouvements / Commandes clients servis"
+                    },
+                    {   "id":2,
+                        "label": "Menu /Mouvements / Saisie rapide commandes clients servis"
+                    }
+                ],
+        "keyword": "commande,création",
+        "updatedate": "20230210",
+        "insertdate": "20230210"
+    },
+    {
+        "id":1,
+        "numFaq":1,
+        "productId":1,
+        "question":"Préparation des commandes",
+        "answer":"Menu colis/préparation",
+        "keyword": "colis,préparation",
+        "updatedate": "20230131",
+        "insertdate": "20230115"
+    },
+    {
+        "id":2,
+        "numFaq":2,
+        "productId":1,
+        "question":"Créer un échange contradictoire",
+        "answer":"Aller dans le menu « Colis » puis « Gestion des colis » puis « Préparation des lots ». Ensuite cliquer sur le bouton « Créer ».Ensuite cliquer sur le bouton « Créer » ",
+        "keyword": "edition,bordereau",
+        "updatedate": "20230130",
+        "insertdate": "20230115"
+    },
+    {
+        "id":4,
+        "numFaq":4,
+        "productId":1,
+        "question":"Créer une tournée",
+        "answer":[  {   "id":1,
+                        "label": "Aller dans le menu « Bases » puis « Tournées» et cliquer sur le bouton « Créer »."
+                    },
+                    {   "id":2,
+                        "label": "1 Code Tournée : code sur 5 positions"
+                    },
+                    {   "id":3,
+                        "label": "2 Journée : choisir le jour de la semaine concernée. (1 = lundi  2 = mardi etc...) Le code « -1 » permet de désactiver une tournée"
+                    }
+                ],        
+        "keyword": "tournée",
+        "updatedate": "20230130",
+        "insertdate": "20230115"
+    },
+    {
+        "id":3,
+        "numFaq":3,
+        "productId":2,
+        "question":"Saisie des maculés",
+        "answer":[  {   "id":1,
+                        "label": "Saisir dans Eurocaisse."
+                    }
+                ],
+        "keyword": "edition,bordereau",
+        "updatedate": "20230130",
+        "insertdate": "20230115"
+    },
+    {
+        "id":5,
+        "numFaq":5,
+        "productId":1,
+        "question":"Edition des feuilles de route",
+        "answer":[  {   "id":1,
+                        "label": "Sélectionner la date de livraison, la tournée, puis cliquer sur le bouton « Remplissage du tableau » en dessous du tableau. Une fois les données affichées, choisir le mode d’édition (paysage, portrait etc.) puis cliquer sur le bouton « Valider » pour imprimer."
+                    }
+                ],
+        "keyword": "edition,route",
+        "updatedate": "20230130",
+        "insertdate": "20230115"
+    }
+]
