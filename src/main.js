@@ -1,5 +1,5 @@
 //Youtube: https://www.youtube.com/watch?v=NRxzvpdduvQ&list=PLkyjZc5TfBPbi6larZgCp0uO0ckrywBk8&index=6&t=6300s
-
+console.log("main.js")
 import {createApp} from 'vue'
 import global from "./global"
 //import BootstrapVue from "bootstrap-vue"
@@ -39,7 +39,7 @@ axios.post(global.state.apiUrl+"/api/login", configAxios)
   .catch(error => {
     console.error("error");
 });
-console.log("main.js")
+
 //Ajouter l'Authorization à toutes les requêtes sortantes
 axios.interceptors.request.use(
   (config) => {
