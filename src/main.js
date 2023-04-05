@@ -1,5 +1,5 @@
 //Youtube: https://www.youtube.com/watch?v=NRxzvpdduvQ&list=PLkyjZc5TfBPbi6larZgCp0uO0ckrywBk8&index=6&t=6300s
-console.log("main.js")
+console.log("main.js2")
 import {createApp} from 'vue'
 import global from "./global"
 //import BootstrapVue from "bootstrap-vue"
