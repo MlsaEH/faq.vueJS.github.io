@@ -22,8 +22,10 @@
         imageInputRef.value.click();
     };
 
-    const setImage = (event) => {
+    const setImage = (event) => {        
         image.value = event.target.files[0];
+        console.log("setImage");
+        console.log(image.value);
     };
 
     const addFaq=() => {

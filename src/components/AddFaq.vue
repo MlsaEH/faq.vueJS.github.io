@@ -1,9 +1,13 @@
 <script setup>
     import {useRouter} from "vue-router"
-    import {ref,watch} from "vue";
+    import {ref,watch} from "vue"
     import global from "../global"
-    //import {fs} from "fs"
-    import axios from "axios";
+    //import * as fs from 'fs'
+    import axios from "axios"
+    //var FormData = require('form-data')
+    //import FormData from "form-data"
+    //var fs = require('fs');
+    //import fs from 'fs'
     import product from "../data/product.json"
     const products=ref(product)
     const productSelected=ref([])
@@ -16,7 +20,7 @@
     const newFaqAnswer = ref("");
     const errorMessage=ref("");
     const errorMessageAnswer=ref("");
-    //let imageFile=ref("");
+    let imageFile=ref("");
     //var productId=0;
     //console.log(global.state.apiUrl);
     const addFaq=() => {
@@ -37,6 +41,8 @@
           errorMessageAnswer.value=global.state.trad.SelectaProduct
           return
       }else{
+        //Sans image/pdf
+        console.log(imageFile.value);
         const options = {
           method: 'POST',
           url: global.state.apiUrl+"/api/faq",
@@ -47,7 +53,8 @@
               question: newFaqQuestion.value,
               answer: newFaqAnswer.value,
               productId: prodId, //newFaq.productId,
-              picture: "" //imageUrl.value
+              picture: "", //imageUrl.value
+              nation:global.state.nation
             }
           };
           axios.request(options).then(function (response) {
@@ -56,28 +63,39 @@
               console.log("RAZ global.state.faqs");
           }).catch(function (error) {console.error(error);});
 
-        // var axios = require('axios');
-        // var FormData = require('form-data');
-        // var fs = require('fs');
-        // var data = new FormData();
-        // data.append('question', newFaqQuestion.value);
-        // data.append('answer', newFaqAnswer.value);
-        // data.append('productId', prodId);
+        //Avec image/pdf
+        // //var axiosp = require('axios')
+        // //var FormData = require('form-data')
+        // //var fs = require('fs');
+        // //let formData = new FormData();
+        // var form = new FormData(); 
+        // form.append("question", newFaqQuestion.value);
+        // form.append("answer", newFaqAnswer.value);
+        // form.append("nation", global.state.nation);
+        // form.append("productId", prodId);
+        // form.append("picture", imageFile.value);
+        // //const fs = require('fs');
+        // //data.append('question', newFaqQuestion.value);
+        // //data.append('answer', newFaqAnswer.value);
+        // //data.append('productId', prodId);
         // //data.append('picture', fs.createReadStream('aayjVXKyN/signature.jpeg'));
-        // data.append('picture', fs.createReadStream(this.image));
+        // //data.append('picture', fs.createReadStream(this.image));
+        // //data.append('nation', global.state.nation);
 
-        // var config = {
+        // var options = {
         //   method: 'post',
         //   maxBodyLength: Infinity,
         //   url: global.state.apiUrl+"/api/faq",
-        //   headers: { 
-        //     'Content-Type': 'application/json', 
-        //     ...data.getHeaders()
-        //   },
-        //   data : data
+        //   // headers: { 
+        //   //   'Content-Type': 'application/json', 
+        //   //   ...data.getHeaders()
+        //   // },
+        //   // data : data
+        //   headers: {'Content-Type': 'multipart/form-data; boundary=---011000010111000001101001'},
+        //   data: '[form]'
         // };
 
-        // axios(config)
+        // axios(options)
         // .then(function (response) {
         //   console.log(JSON.stringify(response.data));
         // })
@@ -101,17 +119,18 @@
         //   console.log("add"+new Date().toISOString().slice(11, 23))
         // }).catch(function (error) {console.error(error);})
         // .then(console.log(""))
-        router.push(`/`);
+        router.push(`/`)
       }      
     }
     const closeFaq=() => {
       router.push(`/`)
     }
-
-    // const onFileChange=()=>{
-    //   console.log(target.files[0]);
-    //   imageFile.value = target.files[0];
-    // }
+    //const fileinput=ref("")
+    const onFileChange=(event)=>{
+      console.log("fileinput")
+      imageFile.value = event.target.files[0]
+      console.log(imageFile.value.name)
+    }
 
 </script>
 

@@ -1,6 +1,8 @@
 //Youtube: https://www.youtube.com/watch?v=NRxzvpdduvQ&list=PLkyjZc5TfBPbi6larZgCp0uO0ckrywBk8&index=6&t=6300s
-console.log("main.js2")
-import {createApp} from 'vue'
+//console.log("main.js2")
+//import {createApp} from 'vue'
+//c:/Mes Projets/VueJS/faq.vueJS.github.io/node_modules/vue/dist/vue
+import { createApp } from "vue"
 import global from "./global"
 //import BootstrapVue from "bootstrap-vue"
 // import "bootstrap/dist/css/bootstrap.min.css"
@@ -9,7 +11,9 @@ import global from "./global"
 import App from './App.vue'
 import router from "./router/index"
 import './assets/main.css'
-import axios from 'axios';
+import axios from 'axios'
+//node_modules/axios/index
+//import axios from '../node_modules/axios/index';
 //import VueTranslate from 'vue-translate-plugin'
 
 //import i18n from "vue-i18n";

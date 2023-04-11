@@ -3,75 +3,75 @@
     import { useRouter } from 'vue-router'
     import global from "../global"
     import axios from "axios"
-    import {ref} from 'vue'
+    //import {ref} from 'vue'
     // import jsPDF from 'jspdf'
     // import pdfMake from 'pdfmake'
     // import pdfFonts from 'pdfmake/build/vfs_fonts'
 
     //pdfMake.vfs = pdfFonts.pdfMake.vfs
-    import html2pdf from 'html2pdf.js'
+    //import html2pdf from 'html2pdf.js'
 
-    const generatePDF = (txt) => {
-        const docDefinition = {
-            content: txt
-        }
-        pdfMake.createPdf(docDefinition).download('test.pdf')
-    }
+    // const generatePDF = (txt) => {
+    //     const docDefinition = {
+    //         content: txt
+    //     }
+    //     pdfMake.createPdf(docDefinition).download('test.pdf')
+    // }
 
-    const downloadPdf=(pdfId) => {
-        //console.log("downloadPdf")
-        //console.log(pdfId);
-        const optionsPdf = {
-            method: 'GET',
-            url: global.state.apiUrl+"/api/pdf/"+pdfId,
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        }        
-        axios.request(optionsPdf).then(function (response) {
-            console.log("response downloadPdf")
-            //console.log(response.data.message)
-            //console.log(response.data.data[0].filename)
-            //console.log(response.data.data[0].pdf.data)
-            const content = JSON.stringify(response.data.data[0].pdf.data)
-            //const content = [91,32,51,55,44,32,56,48,44,32,54,56,44,32,55,48,44,32,52,53,44,32,52,57,44,32,52,54,44,32,53,50,44,32,49,48,44,32,51,55,44,32,50,50,56,44,32,50,50,55,44,32,50,48,55,44,32,50,49,48,44,32,49,48,44,32];
-            var pdfData =new Uint8Array(response.data.data[0].pdf.data)
-            //console.log(pdfData);
-            //console.log(content);
-            //const chaine = String.fromCharCode(...pdfData);
+    // const downloadPdf=(pdfId) => {
+    //     //console.log("downloadPdf")
+    //     //console.log(pdfId);
+    //     const optionsPdf = {
+    //         method: 'GET',
+    //         url: global.state.apiUrl+"/api/pdf/"+pdfId,
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //         }
+    //     }        
+    //     axios.request(optionsPdf).then(function (response) {
+    //         console.log("response downloadPdf")
+    //         //console.log(response.data.message)
+    //         //console.log(response.data.data[0].filename)
+    //         //console.log(response.data.data[0].pdf.data)
+    //         const content = JSON.stringify(response.data.data[0].pdf.data)
+    //         //const content = [91,32,51,55,44,32,56,48,44,32,54,56,44,32,55,48,44,32,52,53,44,32,52,57,44,32,52,54,44,32,53,50,44,32,49,48,44,32,51,55,44,32,50,50,56,44,32,50,50,55,44,32,50,48,55,44,32,50,49,48,44,32,49,48,44,32];
+    //         var pdfData =new Uint8Array(response.data.data[0].pdf.data)
+    //         //console.log(pdfData);
+    //         //console.log(content);
+    //         //const chaine = String.fromCharCode(...pdfData);
 
-            var s1="";  
-            //var octetx =  new Uint8Array([66,79,78,74,79,85,82]);  
-            for (var i=0; i<pdfData.length; i++) {s1=s1+String.fromCharCode(pdfData[i]);}
-            //console.log(s1);
+    //         var s1="";  
+    //         //var octetx =  new Uint8Array([66,79,78,74,79,85,82]);  
+    //         for (var i=0; i<pdfData.length; i++) {s1=s1+String.fromCharCode(pdfData[i]);}
+    //         //console.log(s1);
 
 
-            console.log(s1);
-            //console.log(response.data.data[0].filename)
-            // const doc = new jsPDF()
-            // doc.text(faq.question, 10, 10)
-            // doc.text(faq.answer, 20, 10)
-            // doc.save(response.data.data[0].filename)
-            //generatePDF(s1)
-            const optionsPdf = {
-                filename: response.data.data[0].filename,
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2 },
-                jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-            }
-            //html2pdf(content, optionsPdf);
-            html2pdf().from(s1).set(optionsPdf).save()
-            //pdfMake.createPdf(docDefinition).download('test.pdf')
-        }).catch(function (error) {console.error(error);});
+    //         console.log(s1);
+    //         //console.log(response.data.data[0].filename)
+    //         // const doc = new jsPDF()
+    //         // doc.text(faq.question, 10, 10)
+    //         // doc.text(faq.answer, 20, 10)
+    //         // doc.save(response.data.data[0].filename)
+    //         //generatePDF(s1)
+    //         const optionsPdf = {
+    //             filename: response.data.data[0].filename,
+    //             image: { type: 'jpeg', quality: 0.98 },
+    //             html2canvas: { scale: 2 },
+    //             jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+    //         }
+    //         //html2pdf(content, optionsPdf);
+    //         html2pdf().from(s1).set(optionsPdf).save()
+    //         //pdfMake.createPdf(docDefinition).download('test.pdf')
+    //     }).catch(function (error) {console.error(error);});
 
-        // const response = axios.request(optionsPdf);   
-        // console.log("response")
-        // console.log(response.message)
-        // console.log(response[0].data);      //data[0].filename
-        // const content = JSON.stringify(response.data);
-        // console.log(content);
-        // this.$htmlToPdf(content, options);
-    }
+    //     // const response = axios.request(optionsPdf);   
+    //     // console.log("response")
+    //     // console.log(response.message)
+    //     // console.log(response[0].data);      //data[0].filename
+    //     // const content = JSON.stringify(response.data);
+    //     // console.log(content);
+    //     // this.$htmlToPdf(content, options);
+    // }
 
     //import pdf from 'vue-pdf'
     const router=useRouter()
@@ -113,11 +113,11 @@
     }
     
     //const pdfPath = "";
-    console.log("faq.pdfId");
-    console.log(faq);
-    console.log(faq.pdfId);
+    // console.log("faq.pdfId");
+    // console.log(faq);
+    // console.log(faq.pdfId);
     //console.log(faq.value.pdfId);    
-    const urlPDF=ref("")
+    //const urlPDF=ref("")
     //const urlPDFTest=ref("C://Mes Projets//VueJS//Faq//src//data//Fen_VehiculeEntretienListe.pdf")
     //const urlPDFTest=ref("../data/Fen_VehiculeEntretienListe.pdf") 
 
@@ -175,12 +175,12 @@
                 <iframe :src="url+faq.pdf.replace(/\\/g, '/')" alt="PDF">
             </div> -->
         </div>
-        {{ urlPDF }} 
+        <!-- {{ urlPDF }} 
         <div v-if="faq.pdfId">
-            <!-- <button @click="generatePDF">Télécharger PDF</button> -->
+            <button @click="generatePDF">Télécharger PDF</button>
             <button class="button-one" v-if="global.state.admin" @click="downloadPdf(faq.pdfId)">Télécharger PDF</button>
         </div>
-        <!-- <RouterLink to="/">Go back</RouterLink> -->
+        <RouterLink to="/">Go back</RouterLink> -->
         
     </div>
 </template>

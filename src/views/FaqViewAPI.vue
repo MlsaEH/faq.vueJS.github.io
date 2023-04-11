@@ -5,12 +5,11 @@
     import langues from '../locales/langues.json'
     import tradfr from '../data/trad_fr.json'
     import traden from '../data/trad_en.json'
-    import {h,ref,watch} from "vue"
+    import {onMounted,ref,watch} from "vue"
     import Question from "../components/QuestionAPI.vue"
     import axios from 'axios';  
     import {useRouter} from "vue-router"
     const router=useRouter()
-
     // définition de la fonction pour récupérer la valeur du cookie
     const getCookie = (name) => {
         let nameEQ = name + "=";
@@ -41,7 +40,7 @@
     }
     switch (global.state.nation) {
         case 'fr':
-            global.state.trad=tradfr;
+            global.state.trad=tradfr
             global.state.nation="fr"
             //console.log("frfr");
             break;
@@ -66,23 +65,6 @@
         global.state.produit=0
         global.state.produitUnique=0
     }
-    //const route=useRoute()
-    //?nation=fr&product=Caisse
-    //console.log(route.params);
-    // if (route.params.nation){
-    //     console.log(route.params.nation);
-    //     global.state.nation=route.params.nation
-    // }
-    // if (route.params.product){
-    //     console.log(route.params.product);
-    //     global.state.produit=route.params.product
-    // }
-
-    
-    // if(global.state.faqs){
-    //     console.log("faqs<=global.state.faqs")
-    //     faqs=global.state.faqs
-    // }else{
     const loadFaq=()=>{
         const optionsFaq = {
             method: 'GET',
@@ -113,9 +95,6 @@
     const search =ref("")
     const products=ref(product)
     let productSelected=ref(global.state.produit)
-    //console.log("productSelected.value après loadFaq :"+global.state.produit)
-    //console.log(productSelected)
-    //console.log(faqs);
     if(global.state.produitUnique){
         products.value=product.filter(product=>(product.id===global.state.produit))
     }else{
@@ -177,7 +156,7 @@
         }
         loadFaq()
     })    
-    const showTemplate = ref(true)
+    const showTemplate = ref(true)    
 </script>
 <template>
     <div v-if="showTemplate">
