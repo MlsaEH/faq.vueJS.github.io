@@ -23,8 +23,12 @@
     //let truncatedLabel=products.value=product.filter(product=>(product.company==="55" || product.company===""))
     
     const prod=product.filter(product=>(product.id===faq.productId))//.slice(0, 1)
-    const prodLet="["+prod[0].label+"] " //.slice(0, 1)
-    
+
+    let prodLet="" //"["+prod[0].label+"] " //.slice(0, 1)
+    console.log(global.state.produit);
+    if (global.state.produit===0){
+        prodLet="["+prod[0].label+"] "
+    }
     const doTruncatLabel=()=>{
         //console.log(truncatedLabel.value);
         //console.log(isTruncked);

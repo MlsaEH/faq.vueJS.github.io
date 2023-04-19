@@ -20,8 +20,14 @@
     ,
     {
         "id":3,
-        "code":"ALVARA",
-        "label":"ALVARA",
-        "company": "01"
+        "code":"E-REPORT",
+        "label":"E-Report",
+        "company": "55"
+    },
+    {
+        "id":10,
+        "code":"VISION",
+        "label":"Vision",
+        "company": "55"
     }
-]    
+]

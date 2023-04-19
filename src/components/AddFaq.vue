@@ -10,11 +10,23 @@
     //import fs from 'fs'
     import product from "../data/product.json"
     const products=ref(product)
-    const productSelected=ref([])
-    //console.log(global.state.trad.SelectaProduct);
-    products.value=product.filter(product=>product.company===global.state.clientMlsa)
+    //const productSelected=ref([])
+    let productSelected=ref(global.state.produit)
+    if (global.state.produit>0){
+      //console.log(global.state.produit);    
+      products.value=product.filter(product=>product.id===global.state.produit)
+      productSelected=global.state.produit
+      console.log(productSelected.value)
+      //productSelected.value=0
+    }
+    else{
+      //console.log(global.state.produit);    
+      products.value=product.filter(product=>product.company===global.state.clientMlsa)
+    }
+    //console.log(global.state.produit);    
+    //products.value=product.filter(product=>product.company===global.state.clientMlsa)
     const router=useRouter()
-    const newFaq = ref("");
+    //const newFaq = ref("");
     //const faqs=ref([]);
     const newFaqQuestion = ref("");
     const newFaqAnswer = ref("");
@@ -140,13 +152,13 @@
     <div class="container">
         <textarea v-model.trim="newFaqQuestion" name="Question" id="question" cols="80" rows="3" placeholder="Question..."></textarea>
         <p v-if="errorMessage">{{errorMessage}}</p>
-        <textarea v-model.trim="newFaqAnswer" name="Answer" id="answer" cols="80" rows="10" placeholder="Answer..."></textarea>
+        <textarea v-model.trim="newFaqAnswer" name="Answer" id="answer" cols="80" rows="10" placeholder="Réponse..."></textarea>
         <p v-if="errorMessageAnswer">{{errorMessageAnswer}}</p>
     </div>
     <div class="custom-select">
-      <h1>Products
+      <h1>{{global.state.trad.Products}}
           <select class="selected" v-model="productSelected">
-              <option class="item" v-for="product in products" :key="product.id" :value="product" :label="product.label">
+              <option class="item" v-for="product in products" :key="product.id" :value="product.id" :label="product.label">
                   {{product}}
               </option>
           </select>

@@ -42,7 +42,7 @@
             </h1>
         </div>       
         <header>
-            <img src="../components/icons/logo-1_1_.webp" />
+            <img src="../components/icons/logo-name.webp" />
             <h1>FAQ {{product.label}}</h1>
             <input v-model.trim="search" type="text" placeholder="Filter...">              
             <!-- <button @click="navigateToAddFAQ">+</button>           

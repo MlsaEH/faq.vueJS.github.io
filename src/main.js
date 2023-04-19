@@ -24,6 +24,18 @@ import axios from 'axios'
 //localStorage.setItem('url', url);
 //console.log("glob token:"+token);
 
+// //Vuetify
+// import 'vuetify/styles'
+// import { createVuetify } from 'vuetify'
+// import * as components from 'vuetify/components'
+// import * as directives from 'vuetify/directives'
+
+// const vuetify = createVuetify({
+//   components,
+//   directives,
+// })
+
+
 const configAxios={
   username: global.state.username,
   password: global.state.password
@@ -107,8 +119,17 @@ axios.request(optionsFaq).then(function (response) {
 //   console.log("Main.js récupération faqs:"+new Date().toISOString().slice(11, 23))
 //   console.log(global.state.faqs)
 // }).catch(function (error) {console.error(error);})
-
-const app=createApp(App)
+function setCookie(name, value, days) {
+  let expires = "";
+  if (days) {
+      let date = new Date();
+      date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+      expires = "; expires=" + date.toUTCString();
+  }
+  document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+}
+setCookie("productUnique", 0);
+const app=createApp(App) //.use(vuetify)
 app.use(router)
 //app.use(BootstrapVue)
 app.mount('#app')

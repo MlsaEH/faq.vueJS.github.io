@@ -1,4 +1,5 @@
 <script setup>
+    //import ChildStyles from "../components/ChilStyles.vue"
     import global from "../global"
     //import faq from "../data/faqs.json"
     import product from "../data/product.json"
@@ -9,6 +10,8 @@
     import Question from "../components/QuestionAPI.vue"
     import axios from 'axios';  
     import {useRouter} from "vue-router"
+    import imagefr from "../assets/fr.png"
+    import imageen from "../assets/en.png"
     const router=useRouter()
     // définition de la fonction pour récupérer la valeur du cookie
     const getCookie = (name) => {
@@ -38,6 +41,7 @@
         //console.log("cookie nation:"+ maNation);
         global.state.nation=maNation
     }
+    let nationfr=true
     switch (global.state.nation) {
         case 'fr':
             global.state.trad=tradfr
@@ -47,6 +51,7 @@
         case 'en':
             global.state.trad=traden;
             global.state.nation="en"
+            nationfr=false
             //console.log("enen");
             break;
         default: 
@@ -66,6 +71,7 @@
         global.state.produitUnique=0
     }
     const loadFaq=()=>{
+        console.log("loadFaq");
         const optionsFaq = {
             method: 'GET',
             url: global.state.apiUrl+"/api/faqs",
@@ -82,7 +88,13 @@
             //console.log(faqs)
             //console.log(global.state.faqs)
           //if (global.state.faqs){
-            faqs.value=global.state.faqs
+            
+            if (global.state.produit>0){
+                faqs.value=global.state.faqs.filter(faq=>faq.productId===productSelected.value)
+            }else
+            {
+                faqs.value=global.state.faqs
+            }
           //}
             //console.log(faqs.value)
           //console.log("faqview"+new Date().toISOString().slice(11, 23))
@@ -95,6 +107,22 @@
     const search =ref("")
     const products=ref(product)
     let productSelected=ref(global.state.produit)
+    //combobox
+    // let items=product
+    // let item=null
+    // //console.log(items);
+    // items=product
+    //console.log(items);
+    const onChange=(entry)=>{
+        if (typeof entry === 'string' && entry.trim()) {
+        const item = this.items.find(item => item.name === entry)
+        if (item) {
+          this.item = item
+        } else {
+          this.item = this.addItem(entry)
+        }
+      }
+    }
     if(global.state.produitUnique){
         products.value=product.filter(product=>(product.id===global.state.produit))
     }else{
@@ -134,6 +162,7 @@
     watch(langueSelected,()=>{
         setCookie("nation", langueSelected.value, 365);
         global.state.nation=langueSelected.value
+        nationfr=true
         switch (global.state.nation) {
         case 'fr':
             global.state.trad=tradfr;
@@ -141,6 +170,7 @@
             break;
         case 'en':
             global.state.trad=traden;
+            nationfr=false
             //console.log("senen");
             break;
         default: 
@@ -157,157 +187,118 @@
         loadFaq()
     })    
     const showTemplate = ref(true)    
+    const langueSelectedfr=()=>{
+        console.log("fr");
+        setCookie("nation", "fr", 365)
+        global.state.nation="fr"
+        global.state.trad=tradfr;
+        nationfr=true
+        loadFaq()
+    }
+    const langueSelecteden=()=>{
+        console.log("en");
+        setCookie("nation", "en", 365)
+        global.state.nation="en"
+        global.state.trad=traden;
+        nationfr=false
+        loadFaq()
+    }
 </script>
 <template>
-    <div v-if="showTemplate">
-        <!-- {{productSelected}} -->
-        <h1>{{global.state.trad.Langue}}
-            <select class="selected" v-model="langueSelected">
+    <header>
+        <div class="nation">
+            <a href="#"  @click="langueSelectedfr">
+                <img :src="imagefr" />
+            </a>
+            <a href="#" @click="langueSelecteden">
+                <img :src="imageen"/>
+            </a>
+        </div>
+        <!-- <div class="custom-select4"> -->
+            <!-- <h4>{{global.state.trad.Langue}}</h4> -->
+            <!-- <select class="selectedNation" v-model="langueSelected">
                 <option class="item" v-for="langue in langues" :key="langue.id" :value="langue.id" :label="langue.label">
                     {{langue.label}}
                 </option>
-            </select>
-        </h1>
-        <div class="custom-select">
-            <h1>{{global.state.trad.Products}}
-                <select class="selected" v-model="productSelected">
-                    <option class="item" v-for="product in products" :key="product.id" :value="product.id" :label="product.label">
-                        {{product}}
-                    </option>
-                </select>
+            </select> -->
+        <!-- </div> -->
+        <div class="logo">
+            <img src="../components/icons/logo-name.webp" />                   
+        </div>
+        <!-- {{productSelected}} -->
+        <div v-if="!global.state.produitUnique">
+            <div class="custom-selectall">                   
+                <div class="custom-select4">
+                    <h4>{{global.state.trad.Products}}</h4>                    
+                    <select class="selected" v-model="productSelected">
+                        <option class="item" v-for="product in products" :key="product.id" :value="product.id" :label="product.label">
+                            {{product}}
+                        </option>
+                    </select>
+                </div>     
+            </div>   
+        </div>
+        <!-- <v-combobox
+            v-model="item"
+            :items="items"
+            @change="onChange"
+            item-text="name"
+            item-value="id"
+            label=global.state.trad.Products
+            return-object
+        ></v-combobox> -->
+        <div class="custom-filter">
+            <h1>
+                <input v-model.trim="search" type="text" :placeholder="global.state.trad.Filter">                      
+                <button v-if="global.state.admin" @click="addFaq">+</button>
             </h1>
-        </div>
-        <header>
-            <img src="../components/icons/logo-1_1_.webp" /> 
-            <h1>FAQ {{product.label}}</h1>
-            <input v-model.trim="search" type="text" :placeholder="global.state.trad.Filter">              
-            <!-- <button @click="navigateToAddFAQ">+</button> -->           
-            <button v-if="global.state.admin" @click="addFaq">+</button>
-            <!-- <button @click="setUpFaq">Setup</button> -->
-        </header>    
-        <div class="options-container">
-            <Question v-for="(faq,index) in faqs" :key="faq.id" :faq="faq" :index="index"/> 
-            <!-- <h1 v-for="(faq,index) in faqs" :key="faq.id" :faq="faq" :index="index">
-                <h1 class="question">
-                    {{faq.question.slice(0, 20)}}
-                </h1>
-                <h2 class="answer">
-                    {{faq.answer.slice(0, 30)}}
-                </h2>
-            </h1> -->
-        </div>
+        </div>               
+    </header>    
+    <div class="options-container">
+        <Question v-for="(faq,index) in faqs" :key="faq.id" :faq="faq" :index="index"/> 
+        <!-- <h1 v-for="(faq,index) in faqs" :key="faq.id" :faq="faq" :index="index">
+            <h1 class="question">
+                {{faq.question.slice(0, 20)}}
+            </h1>
+            <h2 class="answer">
+                {{faq.answer.slice(0, 30)}}
+            </h2>
+        </h1> -->
     </div>
 </template>
 
 <style scoped>
-    .answer{
-        font-weight:bold;
-        font-size:15px;
+    .nation a{        
+        display:inline-flex;  
+        margin-left: 10px;        
     }
-    .question{
-        font-weight:lighter;
-        font-size:20px;
-    }
-    .custom-select {
-        position: relative;
-        width: 100%;
-        text-align: left;
-        outline: none;
-        height: 40px;    
-        line-height: 60px;
-    }
-    .selected {
+    .custom-filter input{
         background-color: white;
-        border-radius: 6px;
-        border: 1px solid #858586;
-        color: black;
-        padding-left: 8px;
-        cursor: pointer;
-        user-select: none;
-    }
-
-    .selected.open{
-        border: 1px solid #CE9B2C;
-        border-radius: 6px 6px 0px 0px;
-    }
-
-    .selected:after {
-        position: absolute;
-        content: "";
-        top: 22px;
-        right: 10px;
-        width: 0;
-        height: 0;
-        border: 4px solid transparent;
-        border-color: #fff transparent transparent transparent;
-    }
-
-    .items {
-        color: #ffffff;
-        border-radius: 0px 0px 6px 6px;
-        overflow: hidden;
-        border-right: 1px solid #CE9B2C;
-        border-left: 1px solid #CE9B2C;
-        border-bottom: 1px solid #CE9B2C;
-        position: absolute;
-        background-color: #080D0E;
-        left: 0;
-        right: 0;
-    }
-
-    .item{
-        color: black;
-        padding-left: 8px;
-        cursor: pointer;
-        user-select: none;
-    }
-
-    .item:hover{
-        background-color: #B68A28;
-    }
-
-    .selectHide {
-        display: none;
+        font-size:medium;
+        width: 300px;
     }
     header{
-        margin-bottom: 10px;
-        margin-top: 30px;
-        display:flex;
-        align-items: center;
+        padding-left: 30px;
     }
-    header h1{
-        font-weight: bold;
-        margin-right: 30px;
-        margin-left: 30px;
+    .selectedNation{                
+        width: 45px;        
+        font-size:medium;
+        background-color: rgb(172, 170, 170);
     }
-    header button{
-        font-weight: bold;   
-        align-items: right;
-        margin-left: 300px;
+    .custom-select4{                
+        width: 500px;
+        font-size:medium;
     }
-    .header input {
-        border: none;        
-        padding: 10px;
-        border-radius: 5px;
-        background-color: rgba(128,128,128,0.1);
+    .custom-selectall{
+        display:inline-block;       
     }
-    .options-container {
-        display:contents;
-        flex-wrap:wrap;
-        margin-top: 40px;
+    h4{
+        color: rgb(156, 20, 49);
+        width: 100px;
     }
-    div img{
-        width: 200px;        
-        align-content: center;
-    }
-    div button {
-        border: none;    
-        width: 30px;
-        height: 30px;
-        cursor: pointer;
-        background-color: rgb(124, 24, 51);
-        color: white;
-        font-size: 20px;  
-        border-radius: 15px;  
+
+    .selected{
+        width: 150px;
+        background-color: white;
     }
 </style>
