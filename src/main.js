@@ -101,24 +101,6 @@ axios.request(optionsFaq).then(function (response) {
         //console.log(global.state.faqs);
         //console.log("main"+new Date().toISOString().slice(11, 23))
 }).catch(function (error) {console.error(error);})
-
-//options.headers['Accept-Language']="en"
-//options.url=global.state.apiUrl+"/api/trad"
-//console.log("trad");
-// axios.request(options).then(function (response) {
-//     //console.log(response.data);
-//     global.state.trad=response.data
-//     //console.log(global.state.trad);
-//     }).catch(function (error) {console.error(error);});
-
-// options.url=global.state.apiUrl+"/api/faqs"
-// axios.request(options).then(function (response) {
-//   //console.log(response.data.data);
-//   //faqs.value=response.data.data
-//   global.state.faqs=response.data.data
-//   console.log("Main.js récupération faqs:"+new Date().toISOString().slice(11, 23))
-//   console.log(global.state.faqs)
-// }).catch(function (error) {console.error(error);})
 function setCookie(name, value, days) {
   let expires = "";
   if (days) {

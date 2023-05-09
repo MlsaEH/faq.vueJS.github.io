@@ -9,7 +9,28 @@
     import {onMounted,ref,watch} from "vue"
     import Question from "../components/QuestionAPI.vue"
     import axios from 'axios';  
-    import {useRouter} from "vue-router"
+    import {useRouter,useRoute} from "vue-router"
+    const route=useRoute()
+    const params=route.params.set
+    console.log(params)
+    if(params!=null){
+        global.state.nation=route.params.set.split('|')[0]
+        global.state.produit=route.params.set.split('|')[1]
+        global.state.produitUnique=route.params.set.split('|')[1]
+        function setCookie(name, value, days) {
+            let expires = "";
+            if (days) {
+                let date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                expires = "; expires=" + date.toUTCString();
+            }
+            document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+        }
+        // appel de la fonction pour sauvegarder une donnée dans un cookie
+        setCookie("nation", global.state.nation, 365);
+        setCookie("product", global.state.produit, 365);
+        setCookie("productUnique", global.state.produitUnique);
+    }else{console.log("no param")}
     import imagefr from "../assets/fr.png"
     import imageen from "../assets/en.png"
     const router=useRouter()

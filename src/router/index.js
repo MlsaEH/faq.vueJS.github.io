@@ -19,6 +19,12 @@ const router=createRouter({
         }
         ,
         {
+            path: "/:set",
+            name: "setup",
+            component: FaqView
+        }
+        ,
+        {
             path: "/faq/:id",
             name: "faq",
             component: QuestionView
