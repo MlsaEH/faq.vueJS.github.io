@@ -11,12 +11,14 @@
     //import fs from 'fs'
     import product from "../data/product.json"
     const products=ref(product)
+    var prodId=0
     //const productSelected=ref([])
     let productSelected=ref(global.state.produit)
     if (global.state.produit>0){
       //console.log(global.state.produit);    
       products.value=product.filter(product=>product.id===global.state.produit)
       productSelected=global.state.produit
+      prodId=productSelected
       console.log(productSelected.value)
       //productSelected.value=0
     }
@@ -39,7 +41,7 @@
     //console.log(global.state.apiUrl);
     const addFaq=() => {
       //console.log(productSelected.id)
-      const prodId=productSelected //.value.id
+      prodId=productSelected //.value.id
       //console.log(prodId);
       errorMessage.value=""
       errorMessageAnswer.value=""
@@ -59,7 +61,7 @@
         const data = new FormData();
         data.append('question', newFaqQuestion.value)
         data.append('answer', newFaqAnswer.value)
-        data.append('productId', prodId.value)
+        data.append('productId', prodId)
         data.append('nation', global.state.nation)
         data.append('picture', imageFile.value)
         const config = {
