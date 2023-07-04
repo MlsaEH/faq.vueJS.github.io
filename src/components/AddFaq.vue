@@ -1,10 +1,11 @@
 <script setup>
     import {useRouter} from "vue-router"
     import {ref,watch} from "vue"
-    import global from "../global"
+    import global from "../global"    
     //import * as fs from 'fs'
     import axios from "axios"
-    //var FormData = require('form-data')
+    import FormData from 'form-data'
+    //import fs from 'fs'
     //import FormData from "form-data"
     //var fs = require('fs');
     //import fs from 'fs'
@@ -28,15 +29,17 @@
     const router=useRouter()
     //const newFaq = ref("");
     //const faqs=ref([]);
-    const newFaqQuestion = ref("");
-    const newFaqAnswer = ref("");
-    const errorMessage=ref("");
-    const errorMessageAnswer=ref("");
-    let imageFile=ref("");
+    const newFaqQuestion = ref("")
+    const newFaqAnswer = ref("")
+    const errorMessage=ref("")
+    const errorMessageAnswer=ref("")
+    let imageFile=ref("")
+    let pdfFile=ref("")
     //var productId=0;
     //console.log(global.state.apiUrl);
     const addFaq=() => {
-      const prodId=productSelected.value.id
+      //console.log(productSelected.id)
+      const prodId=productSelected //.value.id
       //console.log(prodId);
       errorMessage.value=""
       errorMessageAnswer.value=""
@@ -53,85 +56,31 @@
           errorMessageAnswer.value=global.state.trad.SelectaProduct
           return
       }else{
-        //Sans image/pdf
-        console.log(imageFile.value);
-        const options = {
-          method: 'POST',
-          url: global.state.apiUrl+"/api/faq",
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            data:{         
-              question: newFaqQuestion.value,
-              answer: newFaqAnswer.value,
-              productId: prodId, //newFaq.productId,
-              picture: "", //imageUrl.value
-              nation:global.state.nation
-            }
-          };
-          axios.request(options).then(function (response) {
-              console.log(response.data);
-              global.state.faqs===null
-              console.log("RAZ global.state.faqs");
-          }).catch(function (error) {console.error(error);});
-
-        //Avec image/pdf
-        // //var axiosp = require('axios')
-        // //var FormData = require('form-data')
-        // //var fs = require('fs');
-        // //let formData = new FormData();
-        // var form = new FormData(); 
-        // form.append("question", newFaqQuestion.value);
-        // form.append("answer", newFaqAnswer.value);
-        // form.append("nation", global.state.nation);
-        // form.append("productId", prodId);
-        // form.append("picture", imageFile.value);
-        // //const fs = require('fs');
-        // //data.append('question', newFaqQuestion.value);
-        // //data.append('answer', newFaqAnswer.value);
-        // //data.append('productId', prodId);
-        // //data.append('picture', fs.createReadStream('aayjVXKyN/signature.jpeg'));
-        // //data.append('picture', fs.createReadStream(this.image));
-        // //data.append('nation', global.state.nation);
-
-        // var options = {
-        //   method: 'post',
-        //   maxBodyLength: Infinity,
-        //   url: global.state.apiUrl+"/api/faq",
-        //   // headers: { 
-        //   //   'Content-Type': 'application/json', 
-        //   //   ...data.getHeaders()
-        //   // },
-        //   // data : data
-        //   headers: {'Content-Type': 'multipart/form-data; boundary=---011000010111000001101001'},
-        //   data: '[form]'
-        // };
-
-        // axios(options)
-        // .then(function (response) {
-        //   console.log(JSON.stringify(response.data));
-        // })
-        // .catch(function (error) {
-        //   console.log(error);
-        // });
-        // newFaq.value="";
-        // errorMessage.value="";
-        // errorMessageAnswer.value="";
-        // //global.state.faqs="";
-        // const optionsFaq = {
-        //     method: 'GET',
-        //     url: global.state.apiUrl+"/api/faqs",
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //     }
-        // };  
-        // axios.request(optionsFaq).then(function (response) {
-        //   global.state.faqs=response.data.data
-        //   console.log(global.state.faqs);
-        //   console.log("add"+new Date().toISOString().slice(11, 23))
-        // }).catch(function (error) {console.error(error);})
-        // .then(console.log(""))
-        router.push(`/`)
+        const data = new FormData();
+        data.append('question', newFaqQuestion.value)
+        data.append('answer', newFaqAnswer.value)
+        data.append('productId', prodId.value)
+        data.append('nation', global.state.nation)
+        data.append('picture', imageFile.value)
+        const config = {
+          method: 'post',
+          maxBodyLength: Infinity,
+          url: global.state.apiUrl+"/api/faq", // 'http://localhost:3056/api/faq',
+          headers: { 
+            'Content-Type': 'multipart/form-data'
+            // 'Content-Type': 'application/json',
+            // ...data.getHeaders()
+          },
+          data: data
+        }
+        axios.request(config)
+          .then((response) => {
+            console.log(JSON.stringify(response.data));
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+          router.push(`/`)
       }      
     }
     const closeFaq=() => {
@@ -143,7 +92,6 @@
       imageFile.value = event.target.files[0]
       console.log(imageFile.value.name)
     }
-
 </script>
 
 <template>
@@ -166,7 +114,7 @@
     </div>  
     <div>
       <form>
-        <input type="file" accept=".png, .jpg, .jpeg .pdf" ref="fileinput"  @change="onFileChange">
+        <input type="file" accept=".png, .jpg, .jpeg, .pdf" ref="fileinput"  @change="onFileChange">
       </form>
     </div>
 

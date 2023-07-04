@@ -5,7 +5,7 @@
     const route=useRoute()
     global.state.nation=route.params.set.split('|')[0]
     global.state.produit=route.params.set.split('|')[1]
-    global.state.produitUnique=route.params.set.split('|')[1]
+    global.state.produitUnique=route.params.set.split('|')[2]
     function setCookie(name, value, days) {
         let expires = "";
         if (days) {

@@ -89,6 +89,7 @@ axios.request(options).then(function (response) {
       }
   }).catch(function (error) {console.error(error);});
 
+//console.log(global.state.admin)
 const optionsFaq = {
     method: 'GET',
     url: global.state.apiUrl+"/api/faqs",

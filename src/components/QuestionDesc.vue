@@ -3,7 +3,7 @@
     import { useRouter } from 'vue-router'
     import global from "../global"
     import axios from "axios"
-    //import {ref} from 'vue'
+    import {ref} from 'vue'
     // import jsPDF from 'jspdf'
     // import pdfMake from 'pdfmake'
     // import pdfFonts from 'pdfmake/build/vfs_fonts'
@@ -147,6 +147,14 @@
     //     })
     // }
     //}
+    const isPdfFile = ref(false)
+    const isPIctureFile = ref(false)
+    const fileExtension = faq.picture.substring(faq.picture.lastIndexOf('.') + 1).toLowerCase();
+    if (fileExtension === 'pdf') {
+        isPdfFile.value = true;
+    } else {
+        isPIctureFile.value = true;
+    }
 </script>
 
 <template>
@@ -166,11 +174,16 @@
         </h2>
         <div class="image-container">
             <div v-if="faq.picture">
-                <img :src="url+faq.picture.replace(/\\/g, '/')" alt="Image">
+                <div v-if="isPdfFile">PDF
+                    <embed :src="url+faq.picture.replace(/\\/g, '/')" type="application/pdf" width="100%" height="600px" />
+                </div>
+                <div v-if="isPIctureFile">
+                    <img :src="url+faq.picture.replace(/\\/g, '/')" alt="Image">
+                </div>
             </div>
-            <!-- <div v-if="pdfPath">
-                <iframe :src="pdfPath" width="100%" height="800px"></iframe>
-            </div> -->
+            <div v-if="faq.pdfPath">
+                <button>{{faq.pdfPath}}</button>
+            </div>
             <!-- <div v-if="faq.pdf">
                 <iframe :src="url+faq.pdf.replace(/\\/g, '/')" alt="PDF">
             </div> -->

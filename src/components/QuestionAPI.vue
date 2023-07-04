@@ -25,7 +25,7 @@
     const prod=product.filter(product=>(product.id===faq.productId))//.slice(0, 1)
 
     let prodLet="" //"["+prod[0].label+"] " //.slice(0, 1)
-    console.log(global.state.produit);
+    //console.log(global.state.produit);
     if (global.state.produit===0){
         prodLet="["+prod[0].label+"] "
     }
